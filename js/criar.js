@@ -142,7 +142,7 @@ function renderEditor() {
       <div class="field"><label>Texto do palco</label><input id="stage" value="${esc(v.stage)}" maxlength="20" placeholder="Palco, Tela, Ringue..."></div>
     </div>
     <div class="ed-main">
-      <div class="hint"><b>Como usar:</b> escolha um pincel e clique ou arraste sobre o mapa. Use <b>Corredor</b> para abrir espaços e <b>Bloquear</b> para lugares que não serão vendidos (aparecem com X para o comprador).</div>
+      <div class="hint"><b>Como usar:</b> escolha um pincel e clique ou arraste sobre o mapa (no celular, use <b>Mover mapa</b> para rolar sem pintar). Use <b>Corredor</b> para abrir espaços e <b>Bloquear</b> para lugares que não serão vendidos (aparecem com X para o comprador).</div>
       <div id="sm-edit"></div>
       <div class="stats" id="stats"></div>
       <div style="margin-top:14px;display:flex;justify-content:flex-end">
@@ -189,7 +189,9 @@ function renderTools() {
   $('tools').innerHTML = v.sectors.map(s =>
     `<button class="tool ${is('seat', s.id) ? 'on' : ''}" data-t="seat" data-s="${s.id}"><i style="background:${s.cor}"></i>${esc(s.nome)}</button>`).join('') +
     `<button class="tool ${is('aisle') ? 'on' : ''}" data-t="aisle"><i style="border:1px dashed #999"></i>Corredor</button>
-     <button class="tool ${is('blocked') ? 'on' : ''}" data-t="blocked"><i style="background:#b3b3b3"></i>Bloquear</button>`;
+     <button class="tool ${is('blocked') ? 'on' : ''}" data-t="blocked"><i style="background:#b3b3b3"></i>Bloquear</button>
+     <button class="tool tool-pan ${is('pan') ? 'on' : ''}" data-t="pan">${ICON.hand}Mover mapa</button>`;
+  $('sm-edit').classList.toggle('panning', tool.t === 'pan');
   $('tools').querySelectorAll('.tool').forEach(b => b.onclick = () => {
     tool = { t: b.dataset.t, s: b.dataset.s };
     renderTools();

@@ -20,6 +20,9 @@ const ICON = {
   pix: svg('<path d="m12 3 9 9-9 9-9-9z"/><path d="m8 12 4-4 4 4-4 4z"/>'),
   card: svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>'),
   image: svg('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/>'),
+  home: svg('<path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>'),
+  back: svg('<path d="M19 12H5M11 6l-6 6 6 6"/>'),
+  hand: svg('<path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12M11 11V4.5a1.5 1.5 0 0 1 3 0V12M14 11V6.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L3.3 15a1.5 1.5 0 0 1 2.4-1.8L8 15.5"/>'),
 };
 
 function renderChrome(active) {
@@ -28,14 +31,29 @@ function renderChrome(active) {
     const link = (href, ic, txt, key, cls = '') => `<a href="${href}" class="${cls} ${active === key ? 'active' : ''}">${ic}<span>${txt}</span></a>`;
     top.className = 'topbar';
     top.innerHTML = `<div class="container topbar-in">
+      ${active ? '' : `<button class="top-back" id="top-back" aria-label="Voltar">${ICON.back}</button>`}
       <a class="logo" href="index.html"><i class="logo-mark"></i>${CONFIG.nome}</a>
       <nav class="nav">
         ${link('meus-ingressos.html', ICON.ticket, 'Meus ingressos', 'ingressos')}
         ${link('meus-eventos.html', ICON.cal, 'Meus eventos', 'eventos')}
         ${link('criar-evento.html', ICON.plus, 'Criar evento', 'criar', 'nav-cta')}
-        <span class="avatar" title="Conta (protótipo)">EU</span>
-      </nav></div>`;
+      </nav>
+      <span class="avatar" title="Conta (protótipo)">EU</span></div>`;
+    const bk = top.querySelector('#top-back');
+    if (bk) bk.onclick = () => (history.length > 1 && document.referrer ? history.back() : (location.href = 'index.html'));
   }
+
+  /* Barra de abas inferior (só aparece no celular, via CSS) */
+  const tab = (href, ic, txt, key, cls = '') => `<a href="${href}" class="${cls} ${active === key ? 'on' : ''}">${ic}<span>${txt}</span></a>`;
+  const bar = document.createElement('nav');
+  bar.className = 'tabbar';
+  bar.innerHTML = tab('index.html', ICON.home, 'Explorar', 'home')
+    + tab('meus-ingressos.html', ICON.ticket, 'Ingressos', 'ingressos')
+    + tab('criar-evento.html', ICON.plus, 'Criar', 'criar', 'tab-cta')
+    + tab('meus-eventos.html', ICON.cal, 'Produtor', 'eventos');
+  document.body.appendChild(bar);
+  document.body.classList.add('has-tabbar');
+
   const foot = document.getElementById('foot');
   if (foot) {
     foot.className = 'foot';
@@ -51,13 +69,24 @@ function renderChrome(active) {
 function openModal(html) {
   const bg = document.createElement('div');
   bg.className = 'modal-bg';
-  bg.innerHTML = `<div class="modal">${html}</div>`;
+  bg.innerHTML = `<div class="modal"><i class="grabber" aria-hidden="true"></i>${html}</div>`;
   bg.addEventListener('click', e => { if (e.target === bg) close(); });
   const onKey = e => { if (e.key === 'Escape') close(); };
   document.addEventListener('keydown', onKey);
   document.body.appendChild(bg);
   function close() { bg.remove(); document.removeEventListener('keydown', onKey); }
   return { el: bg.querySelector('.modal'), close };
+}
+
+/** Aviso rápido no rodapé da tela (no lugar de alert) */
+function toast(msg) {
+  document.querySelector('.toast')?.remove();
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.classList.add('out'), 2600);
+  setTimeout(() => t.remove(), 3000);
 }
 
 /** QR "de mentira" (visual) gerado a partir do código do ingresso */

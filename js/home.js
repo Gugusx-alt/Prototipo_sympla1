@@ -83,6 +83,11 @@ function spot(i) {
   timer = setInterval(() => spot(cur + 1), 7000);
 }
 
+/* Trilho deslizável de destaques (versão celular) */
+$('rail').innerHTML = featured.map(ev => `<a class="rail-item" href="evento.html?id=${ev.id}">
+  <div class="rail-media">${posterHTML(ev)}</div>
+  <b>${esc(ev.titulo)}</b><span>${esc(fmtShort(ev))} · ${esc(ev.cidade)}</span></a>`).join('');
+
 /* ---------- Ilustração do mapa na seção de produtores ---------- */
 const demo = Venue.template('teatro');
 const sold = {};

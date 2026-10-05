@@ -8,6 +8,21 @@ Não precisa instalar nada: dê dois cliques em `index.html` (ou arraste para o 
 
 Os dados ficam salvos no próprio navegador (localStorage). Para voltar aos eventos de exemplo, use **"Restaurar dados de demonstração"** no rodapé.
 
+## Celular e web
+
+O protótipo é **mobile-first**: no celular (até 760px de largura) ele funciona como um app, e em telas maiores vira a versão web.
+
+| No celular | Na web |
+|---|---|
+| Barra de abas embaixo (Explorar · Ingressos · Criar · Produtor) e botão voltar no topo | Menu no topo |
+| Destaques em carrossel deslizável; agenda em lista compacta; categorias roláveis | Destaque grande ao lado da busca; agenda em grade |
+| Barra de compra fixa no rodapé com lugares escolhidos e total | Resumo do pedido na lateral |
+| Checkout e prévias abrem como folha que sobe de baixo | Janela (modal) centralizada |
+| Mapa de lugares com poltronas do tamanho do dedo e rolagem lateral | Mapa completo |
+| Editor do mapa com pincéis grudados no topo e ferramenta **Mover mapa** (rolar sem pintar) | Editor com painel lateral |
+
+Para testar no computador, abra o DevTools do navegador (F12) e ative o modo de dispositivo (Ctrl+Shift+M). Servido por HTTP, também pode ser "instalado" na tela inicial do celular (`manifest.webmanifest`).
+
 ## Telas
 
 | Página | O que mostra |

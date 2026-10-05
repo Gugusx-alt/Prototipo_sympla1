@@ -32,7 +32,8 @@ function renderPage() {
         <div class="ev-block"><h3>Sobre o evento</h3><p class="ev-desc">${esc(ev.descricao || 'Sem descrição.')}</p></div>
       </div>
       <aside class="summary" id="summary"></aside>
-    </main>`;
+    </main>
+    <div class="buybar" id="buybar"></div>`;
   if (ev.tipo === 'mapa') renderSeats(); else renderLotes();
   renderSummary();
 }
@@ -49,6 +50,7 @@ function renderSeats() {
     <div class="legend">
       <span><i></i>Disponível</span><span><i class="sel"></i>Selecionado</span><span><i class="off">X</i>Ocupado</span>
     </div>
+    <p class="swipe-hint">Deslize para os lados para ver o mapa inteiro</p>
     <div id="map"></div>`;
   drawMap();
 }
@@ -57,7 +59,7 @@ function drawMap() {
     mode: 'buy', sold: ev.sold, selected,
     onToggle: id => {
       if (selected.has(id)) selected.delete(id);
-      else if (selected.size >= CONFIG.maxPorCompra) return alert(`Você pode selecionar até ${CONFIG.maxPorCompra} lugares por compra.`);
+      else if (selected.size >= CONFIG.maxPorCompra) return toast(`Você pode selecionar até ${CONFIG.maxPorCompra} lugares por compra.`);
       else selected.add(id);
       drawMap(); renderSummary();
     },
@@ -124,6 +126,18 @@ function renderSummary() {
     <div class="fee-note">${ICON.shield} Compra segura · taxa menor que a média do mercado</div>`;
   box.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { selected.delete(b.dataset.rm); drawMap(); renderSummary(); });
   box.querySelector('#buy').onclick = checkout;
+  renderBuybar(items, t);
+}
+
+/* Barra de compra fixa (celular): resume a seleção e leva ao checkout */
+function renderBuybar(items, t) {
+  const bar = document.getElementById('buybar');
+  const what = !items.length
+    ? (ev.tipo === 'mapa' ? 'Toque nos lugares para escolher' : 'Escolha a quantidade')
+    : ev.tipo === 'mapa' ? items.map(i => i.nome.replace('Lugar ', '')).join(', ') : `${t.qtd} ingresso(s)`;
+  bar.innerHTML = `<div class="bb-info"><small>${esc(what)}</small><b>${items.length ? brl(t.total) : `a partir de ${brl(minPrice(ev))}`}</b></div>
+    <button class="btn" ${items.length ? '' : 'disabled'}>Comprar</button>`;
+  bar.querySelector('button').onclick = checkout;
 }
 
 /* ---------- Checkout simulado ---------- */

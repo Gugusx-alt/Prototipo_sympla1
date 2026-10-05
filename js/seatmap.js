@@ -67,7 +67,7 @@ const SeatMap = {
       cellEl.outerHTML = this.cellHTML(venue, venue.cells[r][c], r, c, 'edit', {}, null, null);
     };
     el.addEventListener('pointerdown', e => {
-      if (!e.target.closest('.cell[data-r]')) return;
+      if (!e.target.closest('.cell[data-r]') || getTool().t === 'pan') return;
       e.preventDefault();
       painting = true;
       apply(e.target);
