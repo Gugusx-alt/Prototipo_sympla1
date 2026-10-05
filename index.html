@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Palco — Ingressos para eventos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header id="topbar"></header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Shows · teatro · festas · palestras</p>
+        <h1>Encontre o seu <em>lugar</em> no próximo evento.</h1>
+        <form class="finder" id="finder">
+          <label class="f-q"><span id="ic-search"></span><input id="q" type="search" placeholder="Evento, artista ou local" autocomplete="off"></label>
+          <label class="f-city"><span id="ic-pin"></span><select id="city"><option value="">Todas as cidades</option></select></label>
+          <button class="btn" type="submit">Buscar</button>
+        </form>
+        <div class="hero-points" id="hero-points"></div>
+      </div>
+      <aside class="spotlight" id="spotlight"></aside>
+    </section>
+
+    <section class="section" id="agenda">
+      <div class="section-head">
+        <h3 id="list-title">Agenda</h3>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section class="producer">
+      <div>
+        <p class="eyebrow">Para produtores</p>
+        <h3>Desenhe o seu espaço. Venda lugar por lugar.</h3>
+        <ul id="producer-points"></ul>
+        <a class="btn" href="criar-evento.html">Criar meu evento</a>
+      </div>
+      <div class="producer-map" id="producer-map"></div>
+    </section>
+  </main>
+
+  <footer id="foot"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/seatmap.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

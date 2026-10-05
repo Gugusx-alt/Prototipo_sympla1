@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Criar evento — Palco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header id="topbar"></header>
+  <main class="container">
+    <div class="page-head">
+      <h1>Criar evento</h1>
+      <p>Preencha as informações, monte o mapa de lugares do seu espaço e publique.</p>
+    </div>
+    <div class="steps" id="steps"></div>
+    <div class="panel">
+      <div id="body"></div>
+      <div class="err" id="err"></div>
+      <div class="wizard-foot">
+        <button class="btn btn-ghost" id="back">Voltar</button>
+        <button class="btn" id="next">Continuar</button>
+      </div>
+    </div>
+  </main>
+  <footer id="foot"></footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/seatmap.js"></script>
+  <script src="js/criar.js"></script>
+</body>
+</html>
